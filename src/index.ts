@@ -1,12 +1,5 @@
-import { AutorRepository } from "./infra/repositories/autor/autorRepostiory";
-import { Autor } from "./model/autor";
+import { cadastraAutor } from "./usecase/cadastraAutor";
+import { listaAutores } from "./usecase/listaAutores";
 
- const autores = new AutorRepository();
-// const autor = new Autor();
-// autor.nome = 'teste1';
-// autor.email = 'teste1@gmail.com';
-// autor.biografia = 'asdfasdfasdfasd asdfasdfasf';
-// autor.dataCadastro = null;
-// autores.insert(autor);
-
-autores.getall();
+cadastraAutor();
+listaAutores();

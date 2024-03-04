@@ -1,6 +1,7 @@
 import { Store } from "../../store";
 import { Autor } from "../../../model/autor";
 import { BaseModel } from "../../../model/baseModel";
+import { Validate, validate } from "class-validator";
 export class AutorRepository {
     constructor() {}
 
@@ -9,12 +10,27 @@ export class AutorRepository {
     }
     
     insert(autor: Autor): BaseModel {
-        if (Store.Instance.data['autor'] === undefined)
-            Store.Instance.data['autor'] = [];
-        Store.Instance.data['autor'].push(autor);
-        Store.Instance.SaveData();
-        console.log(this.getall());
-        return autor;
+        try {
+            validate(autor).then(e => {
+                let errorMessage: string = '';
+                e.map(v => {
+                    errorMessage += Object.values(v.constraints)[0] + '\n';
+                });
+                if (errorMessage != '')
+                    console.log('Inclusão de dados não passou pela validação:\n' + errorMessage);
+                else {
+                    if (Store.Instance.data['autor'] === undefined)
+                        Store.Instance.data['autor'] = [];
+                    Store.Instance.data['autor'].push(autor);
+                    Store.Instance.SaveData();
+                    return autor;
+                }
+            })            
+        } catch (e) {
+            console.log(e);
+            return;
+        }
+        return;
     }
 
     filter(): BaseModel[] {
