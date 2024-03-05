@@ -1,3 +1,3 @@
-export class BaseModel {
+export interface IBaseModel {
 
 }

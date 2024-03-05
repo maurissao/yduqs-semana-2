@@ -3,9 +3,9 @@ import { Autor } from "../model/autor";
 export function cadastraAutor() {
     const autores = new AutorRepository();
     const autor = new Autor();
-    autor.nome = '';
-    autor.email = 'teste1@gmail .com';
-    autor.biografia = 'os testes ';
+    autor.nome = 'guimarães rosa';
+    autor.email = 'g.rosa@gmail.com';
+    autor.biografia = 'o texto deve ter mais de 10 caracteres ';
     autor.dataCadastro = new Date();
     autores.insert(autor);
 }

@@ -4,7 +4,8 @@
   },
   "dependencies": {
     "class-validator": "^0.14.1",
-    "node-localstorage": "^3.0.5"
+    "node-localstorage": "^3.0.5",
+    "reflect-metadata": "^0.2.1"
   },
   "name": "yduqs-semana-1",
   "description": "Entrega das atividades da semana 1",
