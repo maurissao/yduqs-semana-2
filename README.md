@@ -1,2 +1,2 @@
-# yduqs-semana-1
-Entrega das atividades da semana 1
+# yduqs-semana-2
+Entrega das atividades da semana 2
