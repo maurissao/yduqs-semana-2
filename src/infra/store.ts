@@ -1,4 +1,5 @@
 import { LocalStorage } from 'node-localstorage';
+
 export class Store {
     #storeName: string = 'pro-books';
     #storage: LocalStorage;
@@ -6,7 +7,6 @@ export class Store {
     private static instance: Store;
     constructor() {
         this.#storage = new LocalStorage(this.#storeName);
-        this.LoadData();
     }
 
     public static get Instance(): Store {
@@ -16,15 +16,14 @@ export class Store {
         return this.instance;
     }
 
-    public LoadData(): void {
-        this.#data = JSON.parse(this.#storage.getItem('data')) || {};
+    public GetData(key: string): any[] {
+        const result: any = JSON.parse(this.#storage.getItem(key));
+        return JSON.parse(this.#storage.getItem(key)) || [];
     }
 
-    public SaveData(): void {
-        this.#storage.setItem('data', JSON.stringify(this.#data));
-    }
-
-    public get data(): object {
-        return this.#data;
+    public SaveData(key: string, data: any): void {
+        let state: any[] = this.GetData(key);
+        state.push(data);
+        this.#storage.setItem(key, JSON.stringify(state));
     }
 }

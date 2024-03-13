@@ -1,15 +1,21 @@
 import { IBaseModel } from "./baseModel";
-import { IsEmail, IsInt, IsNotEmpty, IsString, isNotEmpty, isString, Length } from 'class-validator';
+import { IsEmail,  IsNotEmpty, IsString, Length, Validate } from 'class-validator';
+import { UniqueConstraint } from "../infra/repositories/repositoryDecorator";
 
 export class Autor implements IBaseModel {
+    // @Validate(UniqueConstraint)
+    @IsString()
+    @IsNotEmpty({message: 'O ID autor não deve ser vazio'})
+    id: string;
     @IsString()
     @IsNotEmpty({message: 'O Nome do autor não deve ser vazio'})
     nome: string;
     @IsEmail()
     @IsNotEmpty({message: 'O e-mail deve ser preenchido'})
+    // @Validate(UniqueConstraint)
     email: string;
     @IsString()
     @Length(20, 50)
     biografia: string;
-    dataCadastro: Date;
+    public dataCadastro: Date;
 }

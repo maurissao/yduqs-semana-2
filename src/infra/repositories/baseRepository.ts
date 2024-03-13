@@ -3,43 +3,44 @@ import { validate } from "class-validator";
 import { Store } from "../store";
 import "reflect-metadata";
 
-export class BaseRepository {
-    constructor () {}
-
-    private GetModelName() {
-        const metadata = Reflect.getMetadata('modelName', this.constructor);
-        return metadata;
+export class DateEx extends Date {
+    constructor (...args: []) {
+        super(...args);
+        // const localDate = new Date(this.getTime() - this.getTimezoneOffset() * 60 * 1000);
+        // this.setDate(localDate.getDate());
+        // this.setTime(localDate.getTime());
     }
 
+    public Add(value: number): DateEx {
+        this.setDate(this.getDate() + value);
+        return this;
+    }
+}
+
+export class BaseRepository {
+    constructor () {
+        this.#model = Reflect.getMetadata('modelName', this.constructor);
+    }
+
+    #model: string;
+
     insert(Model: IBaseModel) {
-        return ((model: any) => {
-            try {
-                validate(Model).then(e => {
-                    let errorMessage: string = '';
-                    e.map(v => {
-                        errorMessage += Object.values(v.constraints)[0] + '\n';
-                    });
-                    if (errorMessage != '')
-                        console.log('Inclusão de dados não passou pela validação:\n' + errorMessage);
-                    else {
-                        if (Store.Instance.data[model] === undefined)
-                            Store.Instance.data[model] = [];
-                        Store.Instance.data[model].push(Model);
-                        Store.Instance.SaveData();
-                        return Model;
-                    }
-                })            
-            } catch (e) {
-                console.log(e);
-                return;
-            }
-            return;
-    
-        })(this.GetModelName());
+        try {
+            validate(Model).then(e => {
+                let errorMessage: string = '';
+                e.map(v => errorMessage += Object.values(v.constraints)[0] + '\n');
+                if (errorMessage != '')
+                    console.log('Inclusão de dados não passou pela validação:\n' + errorMessage)
+                else 
+                    Store.Instance.SaveData(this.#model, Model);
+            })            
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     getall(): IBaseModel[] {
-        return Store.Instance.data[this.GetModelName()];
+        return Store.Instance.GetData(this.#model)
     }
     
     filter(): IBaseModel[] {

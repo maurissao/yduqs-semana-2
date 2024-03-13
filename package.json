@@ -1,11 +1,14 @@
 {
   "devDependencies": {
+    "@types/node": "^20.11.26",
+    "reflect-metadata": "^0.2.1",
     "typescript": "^5.3.3"
   },
   "dependencies": {
     "class-validator": "^0.14.1",
     "node-localstorage": "^3.0.5",
-    "reflect-metadata": "^0.2.1"
+    "uuid": "^9.0.1",
+    "uuidv4": "^6.2.13"
   },
   "name": "yduqs-semana-1",
   "description": "Entrega das atividades da semana 1",
