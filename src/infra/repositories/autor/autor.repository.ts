@@ -4,5 +4,4 @@ import { BaseRepository } from "../baseRepository";
 
 @model('Autor')
 export class AutorRepository extends BaseRepository{
-    constructor() { super() }
 }

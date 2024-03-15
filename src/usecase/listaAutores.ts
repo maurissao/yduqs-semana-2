@@ -1,5 +1,6 @@
 import { AutorRepository } from "../infra/repositories/autor/autor.repository";
 import { Autor } from "../model/autor";
+
 export function listaAutores() {
     const autorRepository = new AutorRepository();
     const autores: any[] = autorRepository.getall();
